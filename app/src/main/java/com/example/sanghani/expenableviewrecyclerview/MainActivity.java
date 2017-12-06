@@ -23,6 +23,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
+//    https://www.simplifiedcoding.net/expandable-recyclerview-android/
+
     final String URL_GET_DATA = "https://simplifiedcoding.net/demos/marvel/";
     RecyclerView recyclerView;
     HeroAdapter adapter;
