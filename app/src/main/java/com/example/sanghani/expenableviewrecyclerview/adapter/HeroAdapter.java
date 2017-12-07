@@ -22,13 +22,12 @@ import java.util.List;
  * Created by peacock on 6/12/17.
  */
 
-public class HeroAdapter  extends RecyclerView.Adapter<HeroAdapter.HeroViewHolder> {
+public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.HeroViewHolder> {
 
-
-    private List<Hero> heroList;
-    private Context context;
 
     private static int currentPosition = 0;
+    private List<Hero> heroList;
+    private Context context;
 
     public HeroAdapter(List<Hero> heroList, Context context) {
         this.heroList = heroList;
@@ -62,8 +61,45 @@ public class HeroAdapter  extends RecyclerView.Adapter<HeroAdapter.HeroViewHolde
             }
         });
 
-        //if the position is equals to the item position which is to be expanded
+
+        holder.textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (holder.linearLayout.getTag().equals("0")) {
+                    //creating an animation
+                    Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.anim);
+
+                    //toggling visibility
+                    holder.linearLayout.setVisibility(View.VISIBLE);
+                    holder.arrow.setImageResource(R.drawable.ic_up_arrow);
+
+                    //adding sliding effect
+                    holder.linearLayout.startAnimation(slideDown);
+
+                    //  notifyDataSetChanged();
+
+                    holder.linearLayout.setTag("1");
+                } else {
+                    Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.up);
+
+                    //toggling visibility
+                    holder.linearLayout.setVisibility(View.GONE);
+                    holder.arrow.setImageResource(R.drawable.ic_downarrow);
+
+                    //adding sliding effect
+                    holder.linearLayout.startAnimation(slideDown);
+
+                    holder.linearLayout.setTag("0");
+
+                }
+
+
+            }
+        });
+       /* //if the position is equals to the item position which is to be expanded
         if (currentPosition == position) {
+
             //creating an animation
             Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.anim);
 
@@ -72,6 +108,7 @@ public class HeroAdapter  extends RecyclerView.Adapter<HeroAdapter.HeroViewHolde
 
             //adding sliding effect
             holder.linearLayout.startAnimation(slideDown);
+
         }
 
         holder.textViewName.setOnClickListener(new View.OnClickListener() {
@@ -80,18 +117,11 @@ public class HeroAdapter  extends RecyclerView.Adapter<HeroAdapter.HeroViewHolde
 
                 //getting the position of the item to expand it
                 currentPosition = position;
-            /*    Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.anim);
-
-                //toggling visibility
-                holder.linearLayout.setVisibility(View.VISIBLE);
-
-                //adding sliding effect
-                holder.linearLayout.startAnimation(slideDown);*/
 
                 //reloding the list
-                notifyDataSetChanged();
+               notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
     @Override
@@ -102,12 +132,13 @@ public class HeroAdapter  extends RecyclerView.Adapter<HeroAdapter.HeroViewHolde
     class HeroViewHolder extends RecyclerView.ViewHolder {
         TextView textViewName, textViewRealName, textViewTeam, textViewFirstAppearance,
                 textViewCreatedBy, textViewPublisher, textViewBio;
-        ImageView imageView;
+        ImageView imageView, arrow;
         LinearLayout linearLayout;
 
         HeroViewHolder(View itemView) {
             super(itemView);
 
+            arrow = (ImageView) itemView.findViewById(R.id.arrow);
             textViewName = (TextView) itemView.findViewById(R.id.textViewName);
             textViewRealName = (TextView) itemView.findViewById(R.id.textViewRealName);
             textViewTeam = (TextView) itemView.findViewById(R.id.textViewTeam);
